@@ -2,8 +2,7 @@ from rest_framework import serializers
 
 from .models import Transaction
 
-#from payables.serializers import PayableSerializer
-
+# Serializer for transaction
 class TransactionSerializer(serializers.ModelSerializer):    
 
     class Meta:
@@ -20,8 +19,10 @@ class TransactionSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
+        # Set card_number None, if not necessary
         if( not validated_data['payment_method'].requires_card_number and  'card_number' in validated_data and validated_data['card_number'] is not None ):
             validated_data['card_number'] = None
+        
         # Create transaction
         transaction = super().create(validated_data)
 
@@ -31,12 +32,7 @@ class TransactionSerializer(serializers.ModelSerializer):
         validated_data['payable'].save()
         return transaction
 
-class SimpleTransactionSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = Transaction
-        fields = ['id', 'payment_method', 'card_number', 'amount','barcode', 'payment_date' ]
-
+# Transaction serializer for grouped by date transactions list
 class GroupedTransactionSerializer(serializers.Serializer):
 
     payment_date        = serializers.DateField(required=True)
