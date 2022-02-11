@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "8d0ccc46-c75a-450e-8395-e2a357dda0c1",
+		"name": "Devskills - Elias Biagioni",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Payables",
+			"item": [
+				{
+					"name": "Create payable",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"service_description\": \"Edelap\",\n    \"expiration_date\": \"2022-02-11\",\n    \"barcode\": \"12212a121\",\n    \"service_type\": 2,\n    \"amount\": 1000,\n    \"payment_state\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/payables/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"payables",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get not paid payables",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/payables/?not_paid=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"payables",
+								""
+							],
+							"query": [
+								{
+									"key": "not_paid",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get not paid payables filtered by service type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/payables/?not_paid=true&service_type=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"payables",
+								""
+							],
+							"query": [
+								{
+									"key": "not_paid",
+									"value": "true"
+								},
+								{
+									"key": "service_type",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Create transaction for payable",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 1000.00,\n    \"barcode\": \"131211\",\n    \"payment_date\": \"2022-02-20\",\n    \"payment_method\": 1,\n    \"card_number\": 123456\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/payables/3/transactions/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"payables",
+								"3",
+								"transactions",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get grouped transactions, filtered by from and to date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/transactions?from=2022-02-11&to=2022-02-25&grouped=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2022-02-11"
+								},
+								{
+									"key": "to",
+									"value": "2022-02-25"
+								},
+								{
+									"key": "grouped",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
